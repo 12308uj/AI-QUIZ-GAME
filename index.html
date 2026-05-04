@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Game — The Ultimate Gaming Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/style.css">
+</head>
+<body>
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Login Screen -->
+    <section class="screen active" id="authScreen">
+        <div class="auth-wrapper">
+            <div class="auth-card-new">
+                <div class="auth-body">
+                    <h1 class="auth-title">AI Quiz Game</h1>
+                    <p class="auth-subtitle">Enter the arena of intelligence</p>
+                    <form id="authForm" class="auth-form-compact">
+                        <input type="text" id="authUsername" placeholder="Enter Username" required>
+                        <input type="password" id="authPassword" placeholder="Enter Password (Optional)">
+                        <button type="submit" class="btn btn-primary btn-full">Login</button>
+                    </form>
+                    <div class="auth-footer-new">
+                        <button id="guestBtn" class="btn btn-link">Continue as Guest</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <nav class="main-nav">
+            <div class="nav-content">
+                <div class="logo-sm">🧠 AI Quiz Game</div>
+                <div class="nav-links">
+                    <button class="nav-btn active" id="navHome">Home</button>
+                    <button class="nav-btn" id="navStats">Stats</button>
+                </div>
+                <div class="user-profile">
+                    <button class="nav-btn" id="navBtnLogin" style="border: 1px solid var(--accent); margin-right: 15px;">Logout</button>
+                    <span id="userNameDisplay">Guest</span>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- DASHBOARD -->
+        <section class="screen" id="homeScreen">
+            <div class="hero-section">
+                <h1>Welcome, <span id="welcomeName">Player</span>!</h1>
+                <p>Test your brain with our quizzes and mini-games.</p>
+            </div>
+
+            <h2 class="section-title">🎮 Mini Games</h2>
+            <div class="game-grid-large">
+                <button class="game-card g-chess" id="startChess">
+                    <div class="icon">♟️</div>
+                    <h3>Chess Master</h3>
+                    <p>Classic Strategy</p>
+                </button>
+                <button class="game-card g-merge" id="startMergeGame">
+                    <div class="icon">🔢</div>
+                    <h3>Merge Numbers</h3>
+                    <p>Large 8x8 Arena</p>
+                </button>
+                <button class="game-card g-impossible" id="startImpossible">
+                    <div class="icon">🤯</div>
+                    <h3>Impossible Quiz</h3>
+                    <p>Think Outside Box</p>
+                </button>
+                <button class="game-card g-feud" id="startFeud">
+                    <div class="icon">🔍</div>
+                    <h3>AI Feud</h3>
+                    <p>Autocomplete Guess</p>
+                </button>
+                <button class="game-card g-ttt" id="startTicTacToe">
+                    <div class="icon">❌</div>
+                    <h3>Tic Tac Toe</h3>
+                    <p>Vs AI Engine</p>
+                </button>
+                <button class="game-card g-memory" id="startMemory">
+                    <div class="icon">🃏</div>
+                    <h3>Memory Match</h3>
+                    <p>Emoji Pairing</p>
+                </button>
+            </div>
+
+            <h2 class="section-title">🧠 AI Quizzes</h2>
+            <div class="category-grid" id="categoryGrid"></div>
+        </section>
+
+        <!-- STATS SCREEN -->
+        <section class="screen" id="statsScreen">
+            <div class="stats-container glass-card">
+                <h2>Your Progress</h2>
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats filled by JS -->
+                </div>
+                <button class="btn btn-primary" onclick="showScreen('homeScreen')">Back to Arena</button>
+            </div>
+        </section>
+
+        <!-- Loading Screen -->
+        <section class="screen" id="loadingScreen">
+            <div class="loading-container">
+                <div class="loader-ring"></div>
+                <h2>AI is thinking...</h2>
+            </div>
+        </section>
+
+        <!-- Quiz Screen -->
+        <section class="screen" id="quizScreen">
+            <div class="quiz-container glass-card">
+                <div class="quiz-head">
+                    <span id="quizBadge">Quiz</span>
+                    <span id="quizScore">0</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <h2 id="questionText">Question</h2>
+                <div class="options-grid" id="optionsContainer"></div>
+                <div id="explanationBox" class="explanation hidden">
+                    <p id="explanationText"></p>
+                    <button class="btn btn-primary" id="nextBtn">Next</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chess Master -->
+        <section class="screen" id="chessScreen">
+            <div class="game-area">
+                <h2>Chess Master</h2>
+                <div class="chess-board" id="chessBoard"></div>
+                <div class="game-controls">
+                    <p id="chessStatus">White to move</p>
+                    <button class="btn btn-secondary" id="resetChess">Restart</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Merge Game -->
+        <section class="screen" id="mergeScreen">
+            <div class="game-area">
+                <h2>Merge Numbers</h2>
+                <p>Score: <span id="mergeScore">0</span> | Best: <span id="mergeBest">0</span></p>
+                <div class="merge-grid" id="mergeGrid"></div>
+                <button class="btn btn-secondary" id="newMergeGame">New Game</button>
+            </div>
+        </section>
+
+        <!-- Other game screens (TTT, Memory, Feud, etc.) are already in the DOM or can be injected -->
+        <!-- I'll keep the ones from previous turn in index.html -->
+        <section class="screen" id="puzzleScreen">
+            <div class="game-area glass-card">
+                <h2>Word Scramble</h2>
+                <div class="scrambled-text" id="scrambledWord"></div>
+                <p id="puzzleHint"></p>
+                <input type="text" id="puzzleInput" placeholder="Enter word...">
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="puzzleSubmitBtn">Submit</button>
+                    <button class="btn btn-outline" id="puzzleSkipBtn">Skip</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="screen" id="memoryScreen">
+            <div class="game-area">
+                <h2>Memory Match</h2>
+                <div class="memory-grid" id="memoryGrid"></div>
+                <button class="btn btn-secondary" id="resetMemory">Restart</button>
+            </div>
+        </section>
+
+        <section class="screen" id="feudScreen">
+            <div class="game-area glass-card">
+                <h2>AI Feud</h2>
+                <p class="feud-q" id="feudQuestion"></p>
+                <div class="feud-answers" id="feudAnswers"></div>
+                <input type="text" id="feudInput" placeholder="Guess...">
+                <button class="btn btn-primary" id="feudSubmit">Guess</button>
+            </div>
+        </section>
+
+        <!-- Tic Tac Toe -->
+        <section class="screen" id="tttScreen">
+            <div class="game-area">
+                <h2>Tic Tac Toe</h2>
+                <div class="ttt-grid" id="tttGrid"></div>
+                <div class="game-controls">
+                    <p id="tttStatus">Your turn (X)</p>
+                    <button class="btn btn-secondary" id="resetTtt">Restart</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- AI Study Chatbot -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chat-window glass-card" id="chatWindow">
+            <div class="chat-header">
+                <div class="header-info">
+                    <span class="dot-online"></span>
+                    <span>AI Study Buddy</span>
+                </div>
+                <button class="btn-close" id="closeChat">×</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="msg bot">👋 Hello! I'm your AI Study Buddy. Ask me any subject question and I'll explain it for you!</div>
+            </div>
+
+            <div class="chat-footer">
+                <input type="text" id="chatInput" placeholder="Ask a study question...">
+                <button id="sendChatBtn">🚀</button>
+            </div>
+        </div>
+        <button class="chatbot-fab" id="openChat">💬</button>
+    </div>
+
+    <script src="public/js/app.js"></script>
+</body>
+</html>
